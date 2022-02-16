@@ -1,0 +1,26 @@
+body {
+  background-color: azure;
+}
+
+.block {
+  background-color: beige;
+  min-height: 30px;
+  margin-bottom: 5px;
+  text-align: center;
+  padding: 10px;
+}
+
+#tbl-student {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+#tbl-student tr th{
+  background-color: black;
+  color: white;
+}
+#tbl-student tr th, 
+#tbl-student tr td {
+  border: solid 1px;
+  padding: 5px;
+}

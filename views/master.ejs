@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="<%- obj.domain %>" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quy Lop</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <script src="/js/jquery-min-3.6.js"></script>
+    <script src="/js/process.js"></script>
+    <script src="/scripts/web3.js"></script>
+</head>
+
+<body>
+    <h2>
+        My first blockchain project
+    </h2>
+
+    <div class="block">
+        <div id="login-metamask">
+            <button id="login-metamask-btn">Login MetaMask</button>
+            <div id="currentAccount"></div>
+            <div id="currentEthBalance">0 ETH</div>
+        </div>
+
+        <div id="install-metamask">
+            <h3>Please install <a href="https://metamask.io/">Meta Mask</a></h3>
+        </div>
+    </div>
+
+    <div class="block">
+        <input type="text" name="name" placeholder="Sender name" />
+        <input type="text" name="amount" placeholder="0.0 ETH" />
+        <button id="deposit-btn">Deposit</button>
+    </div>
+
+    <div class="block">
+        <table id="tbl-student">
+            <thead>
+                <tr>
+                    <th width="40%">Account</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="tbl-student-body">
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

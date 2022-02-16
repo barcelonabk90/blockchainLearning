@@ -1,0 +1,14 @@
+{
+    "domain": "http://localhost:3000",
+    "mail_server": {
+        "smtp_server": "smtp.gmail.com",
+        "smtp_port": 465,
+        "smtp_username": "",
+        "smtp_password": ""
+    },
+    "database": {
+        "username": "",
+        "password": "",
+        "dbname": ""
+    }
+}

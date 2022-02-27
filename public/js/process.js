@@ -3,13 +3,38 @@ let web3 = null;
 /** Current logging in wallet address */
 let currentAccount;
 /** contract Address */
-const quyLopAddress = "0xc97afF1513a1772edebe5e07455437C8aF1954bD";
+const quyLopAddress = "0xa5718D80b02F0EcE05B24C17e96c48EAe1bE1a17";
 /** contract ABI */
 const quyLopABI = [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "wallet",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositHasBeenUpdate",
+    "type": "event"
   },
   {
     "inputs": [],
@@ -87,8 +112,10 @@ const quyLopABI = [
     "type": "function"
   }
 ];
+const WSS_INFURA = "wss://rinkeby.infura.io/ws/v3/bd1ebd1d254d43219133d79cda1b8dfa";
 let quyLopContractMM = null;
 let quyLopContractInfra = null;
+let provider = null;
 
 $(function () {
 
@@ -155,12 +182,30 @@ $(function () {
     updateBalance(currentAccount);
   });
 
+  /**
+   * When someone send to deposit transaction successfully, get event notification and render data 
+   */
+  quyLopContractInfra.events.depositHasBeenUpdate({ filter: {}, fromBlock: "latest" }, function (err, data) {
+    if (!err) {
+      $("#tbl-student-body").append(`
+            <tr>
+              <td>${data.returnValues[0]}</td>
+              <td>${data.returnValues[1]}</td>
+              <td>${convertToEth(data.returnValues[2])}</td>
+            <tr>
+            `);
+    } else {
+      console.log(err);
+    }
+  });
+
 });
 
 /**
  * Load all students and display on the table
  */
 const loadStudentList = function () {
+  $("#tbl-student-body").empty();
   // Get total number of students
   quyLopContractMM.methods.countStudent().call()
     .then((total) => {
@@ -217,6 +262,9 @@ const controlDisplayMetaMask = function () {
     $("#install-metamask").hide();
     web3 = new Web3(window.ethereum);
     quyLopContractMM = web3.eth.Contract(quyLopABI, quyLopAddress);
+    provider = new Web3.providers.WebsocketProvider("wss://rinkeby.infura.io/ws/v3/bd1ebd1d254d43219133d79cda1b8dfa");
+    let web3Infura = new Web3(provider);
+    quyLopContractInfra = web3Infura.eth.Contract(quyLopABI, quyLopAddress);
   } else {
     console.log("Chua cai meta mask !");
     $("#login-metamask").hide();
